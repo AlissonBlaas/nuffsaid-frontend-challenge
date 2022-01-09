@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import generateMessage from '../../Api';
 import { Box, Grid, Typography, Stack } from '@mui/material';
 
 import { useLoren } from '../../providers/loren';
@@ -37,12 +36,12 @@ const GridSection = ({ errorTypeNumber, messages, count, priority, paused }: IPr
 )
 
 const App = () => {
-const  { messages, setMessages } = useLoren();
+const { messages, setMessages, subscribe } = useLoren();
 const [isPaused, setIsPaused] = useState<boolean>(false);
 
   useEffect(() => {
     if(!isPaused) {
-      const cleanUp = generateMessage((message: Message) => {
+      const cleanUp = subscribe((message: Message) => {
         setMessages((oldMessages: any) => [ message, ...oldMessages]);
       });
       return cleanUp;
